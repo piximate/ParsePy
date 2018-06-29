@@ -477,7 +477,9 @@ class ParseResource(ParseBase):
             call_back(response)
 
     def _update(self, batch=False):
-        response = self.__class__.PUT(self._absolute_url, batch=batch, **self._to_native())
+        data = self._to_native()
+        data.pop('album', None)
+        response = self.__class__.PUT(self._absolute_url, batch=batch, **data)
 
         def call_back(response_dict):
             self.updatedAt = response_dict['updatedAt']
